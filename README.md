@@ -3,12 +3,13 @@
 ## Technology and Tool Used
 - Postman
 - Newman
+- VS Code
 
 ## Scenerio
 - Search Location with Details by Reverse Geocode 
 
 ## How to run this project
-- clone this project
+- clone this project and Open with VS Code inside the Project File Directory
 - hit the following command:
   - npm init -y 
   - npm i newman 
