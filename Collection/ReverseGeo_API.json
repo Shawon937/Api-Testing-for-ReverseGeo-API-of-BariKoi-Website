@@ -1,0 +1,898 @@
+{
+	"info": {
+		"_postman_id": "293a5e95-9f6f-43f7-85a5-ab4296edbf21",
+		"name": "BariKoi reversegeo API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23406177"
+	},
+	"item": [
+		{
+			"name": "GetLocation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Successful HTTP Request\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"id is correct\", function () {\r",
+							"    pm.expect(jsonData.place.id).to.eql(534001);\r",
+							"});\r",
+							"pm.test(\"address is correct\", function () {\r",
+							"    pm.expect(jsonData.place.address).to.eql(\"হাউজ ২০, এভিনিউ ৩, লেন ২৫, ব্লক ডি, সেকশন ১১, মিরপুর\");\r",
+							"});\r",
+							"pm.test(\"area is correct\", function () {\r",
+							"    pm.expect(jsonData.place.area).to.eql(\"মিরপুর\");\r",
+							"});\r",
+							"pm.test(\"city is correct\", function () {\r",
+							"    pm.expect(jsonData.place.city).to.eql(\"ঢাকা\");\r",
+							"});\r",
+							"pm.test(\"distance within meters\", function () {\r",
+							"    pm.expect(jsonData.place.distance_within_meters).to.eql(3.9083);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=90.36744611263278&latitude=23.81970957278533&district=true&post_code=true&country=true&sub_district=true&union=true&pauroshova=true&location_type=true&division=true&address=true&area=true&bangla=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "90.36744611263278"
+						},
+						{
+							"key": "latitude",
+							"value": "23.81970957278533"
+						},
+						{
+							"key": "district",
+							"value": "true"
+						},
+						{
+							"key": "post_code",
+							"value": "true"
+						},
+						{
+							"key": "country",
+							"value": "true"
+						},
+						{
+							"key": "sub_district",
+							"value": "true"
+						},
+						{
+							"key": "union",
+							"value": "true"
+						},
+						{
+							"key": "pauroshova",
+							"value": "true"
+						},
+						{
+							"key": "location_type",
+							"value": "true"
+						},
+						{
+							"key": "division",
+							"value": "true"
+						},
+						{
+							"key": "address",
+							"value": "true"
+						},
+						{
+							"key": "area",
+							"value": "true"
+						},
+						{
+							"key": "bangla",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation (Outside Bangladesh)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Can't Search Outside Bangladesh\", function () {\r",
+							"    pm.expect(jsonData.message).to.eql(\"invalid latitude or longitude!\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Country is showing\", function () {\r",
+							"    pm.expect(jsonData.place.country).to.eql(\"USA\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"StatusCode is wrong in the message of the response Body \", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(pm.response.code);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=37.96985403473925&latitude=-91.35281049872341&district=true&post_code=true&country=true&sub_district=true&union=true&pauroshova=true&location_type=true&division=true&address=true&area=true&bangla=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "37.96985403473925"
+						},
+						{
+							"key": "latitude",
+							"value": "-91.35281049872341"
+						},
+						{
+							"key": "district",
+							"value": "true"
+						},
+						{
+							"key": "post_code",
+							"value": "true"
+						},
+						{
+							"key": "country",
+							"value": "true"
+						},
+						{
+							"key": "sub_district",
+							"value": "true"
+						},
+						{
+							"key": "union",
+							"value": "true"
+						},
+						{
+							"key": "pauroshova",
+							"value": "true"
+						},
+						{
+							"key": "location_type",
+							"value": "true"
+						},
+						{
+							"key": "division",
+							"value": "true"
+						},
+						{
+							"key": "address",
+							"value": "true"
+						},
+						{
+							"key": "area",
+							"value": "true"
+						},
+						{
+							"key": "bangla",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation (Outside Dhaka)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Can't Search Outside Dhaka\", function () {\r",
+							"    pm.expect(jsonData.message).to.eql(\"invalid latitude or longitude!\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Address is showing\", function () {\r",
+							"    pm.expect(jsonData.place.city).to.eql(\"Khulna\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"StatusCode is wrong in the message of the response Body \", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(pm.response.code);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=22.8535583&latitude=89.5034825&district=true&post_code=true&country=true&sub_district=true&union=true&pauroshova=true&location_type=true&division=true&address=true&area=true&bangla=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "22.8535583"
+						},
+						{
+							"key": "latitude",
+							"value": "89.5034825"
+						},
+						{
+							"key": "district",
+							"value": "true"
+						},
+						{
+							"key": "post_code",
+							"value": "true"
+						},
+						{
+							"key": "country",
+							"value": "true"
+						},
+						{
+							"key": "sub_district",
+							"value": "true"
+						},
+						{
+							"key": "union",
+							"value": "true"
+						},
+						{
+							"key": "pauroshova",
+							"value": "true"
+						},
+						{
+							"key": "location_type",
+							"value": "true"
+						},
+						{
+							"key": "division",
+							"value": "true"
+						},
+						{
+							"key": "address",
+							"value": "true"
+						},
+						{
+							"key": "area",
+							"value": "true"
+						},
+						{
+							"key": "bangla",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation(Parameter value set to False)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"District is Not showing as set to false\", function () {\r",
+							"    pm.expect(!jsonData.hasOwnProperty(\"district\")).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Country is Not showing as set to false\", function () {\r",
+							"    pm.expect(!jsonData.hasOwnProperty(\"country\")).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful HTTP Request\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"id is correct\", function () {\r",
+							"    pm.expect(jsonData.place.id).to.eql(534001);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Sub District is Showing\", function() {\r",
+							"    pm.expect(jsonData.place.sub_district).to.eql(\"Pallabi\")\r",
+							"\r",
+							"\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Distance within meters is showing\", function () {\r",
+							"    pm.expect(jsonData.place.distance_within_meters).to.eql(3.9083);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=90.36744611263278&latitude=23.81970957278533&district=false&country=false&sub_district=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "90.36744611263278"
+						},
+						{
+							"key": "latitude",
+							"value": "23.81970957278533"
+						},
+						{
+							"key": "district",
+							"value": "false"
+						},
+						{
+							"key": "country",
+							"value": "false"
+						},
+						{
+							"key": "sub_district",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation(Without API Key)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Invalid or No Registered Key\", function () {\r",
+							"    pm.expect(jsonData.message).to.eql(\"Invalid or No Registered Key\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"StatusCode is matches with the Status Message of the response Body \", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(pm.response.code);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/API_Key/geocode?longitude=90.36744611263278&latitude=23.81970957278533&district=true&post_code=true&country=true&sub_district=true&union=true&pauroshova=true&location_type=true&division=true&address=true&area=true&bangla=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"API_Key",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "90.36744611263278"
+						},
+						{
+							"key": "latitude",
+							"value": "23.81970957278533"
+						},
+						{
+							"key": "district",
+							"value": "true"
+						},
+						{
+							"key": "post_code",
+							"value": "true"
+						},
+						{
+							"key": "country",
+							"value": "true"
+						},
+						{
+							"key": "sub_district",
+							"value": "true"
+						},
+						{
+							"key": "union",
+							"value": "true"
+						},
+						{
+							"key": "pauroshova",
+							"value": "true"
+						},
+						{
+							"key": "location_type",
+							"value": "true"
+						},
+						{
+							"key": "division",
+							"value": "true"
+						},
+						{
+							"key": "address",
+							"value": "true"
+						},
+						{
+							"key": "area",
+							"value": "true"
+						},
+						{
+							"key": "bangla",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation(Only Longitude or Latitude)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"parameters missing\", function () {\r",
+							"    pm.expect(jsonData.message).to.eql(\"parameters missing\");\r",
+							"});\r",
+							"pm.test(\"StatusCode is matches with the Status Message of the response Body\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(pm.response.code);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=90.36744611263278",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "90.36744611263278"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation (With Only Longitude & Latitude)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Successful HTTP Request\", function () {\r",
+							"    pm.expect(jsonData.status).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"ID is correct\", function () {\r",
+							"    pm.expect(jsonData.place.id).to.eql(534001);\r",
+							"});\r",
+							"pm.test(\"Address is correct\", function () {\r",
+							"    pm.expect(jsonData.place.address).to.eql(\"হাউজ ২০, এভিনিউ ৩, লেন ২৫, ব্লক ডি, সেকশন ১১, মিরপুর\");\r",
+							"});\r",
+							"pm.test(\"Area is correct\", function () {\r",
+							"    pm.expect(jsonData.place.area).to.eql(\"মিরপুর\");\r",
+							"});\r",
+							"pm.test(\"City is correct\", function () {\r",
+							"    pm.expect(jsonData.place.city).to.eql(\"ঢাকা\");\r",
+							"});\r",
+							"pm.test(\"Distance within meters\", function () {\r",
+							"    pm.expect(jsonData.place.distance_within_meters).to.eql(3.9083);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=90.36744611263278&latitude=23.81970957278533",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "90.36744611263278"
+						},
+						{
+							"key": "latitude",
+							"value": "23.81970957278533"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation (With Invalid Method)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Method not allowed!\", function () {\r",
+							"    pm.expect(jsonData.message).to.eql(\"Method not allowed!\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "NDAzMTpCRE9ITjRRSjBP",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "API_KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/api/search/reverse/{{API_KEY}}/geocode?longitude=90.36744611263278&latitude=23.81970957278533&district=true&post_code=true&country=true&sub_district=true&union=true&pauroshova=true&location_type=true&division=true&address=true&area=true&bangla=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"api",
+						"search",
+						"reverse",
+						"{{API_KEY}}",
+						"geocode"
+					],
+					"query": [
+						{
+							"key": "longitude",
+							"value": "90.36744611263278"
+						},
+						{
+							"key": "latitude",
+							"value": "23.81970957278533"
+						},
+						{
+							"key": "district",
+							"value": "true"
+						},
+						{
+							"key": "post_code",
+							"value": "true"
+						},
+						{
+							"key": "country",
+							"value": "true"
+						},
+						{
+							"key": "sub_district",
+							"value": "true"
+						},
+						{
+							"key": "union",
+							"value": "true"
+						},
+						{
+							"key": "pauroshova",
+							"value": "true"
+						},
+						{
+							"key": "location_type",
+							"value": "true"
+						},
+						{
+							"key": "division",
+							"value": "true"
+						},
+						{
+							"key": "address",
+							"value": "true"
+						},
+						{
+							"key": "area",
+							"value": "true"
+						},
+						{
+							"key": "bangla",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://barikoi.xyz",
+			"type": "string"
+		},
+		{
+			"key": "API_KEY",
+			"value": "NDAzMTpCRE9ITjRRSjBP",
+			"type": "string"
+		}
+	]
+}
